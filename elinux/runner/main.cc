@@ -53,9 +53,11 @@ int main(int argc, char **argv) {
       engine_args.push_back(std::move(arg));
     } else if (arg.size() >= 2 && arg[0] == '-' && arg != "-") {
       // Short flag (-f or -f value)
+      const bool takes_value = ShortFlagTakesValue(arg[1]);
       engine_args.push_back(std::move(arg));
       // If this flag takes a value, consume the next argument
-      if (ShortFlagTakesValue(arg[1]) && i + 1 < argc) {
+      if (takes_value && i + 1 < argc) {
+        // if (ShortFlagTakesValue(arg[1]) && i + 1 < argc) {
         engine_args.push_back(argv[++i]);
       }
     } else {
